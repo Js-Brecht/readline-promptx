@@ -1,0 +1,50 @@
+{
+  "root": true,
+  "rules": {
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ],
+    "semi": [
+      "warn",
+      "always"
+    ],
+    "quotes": [
+      "warn",
+      "single"
+    ],
+    "indent": [
+      "warn",
+      4
+    ],
+    "no-control-regex": "off"
+  },
+  "overrides": [
+    {
+      "extends": "@jtechsvcs/typescript",
+      "files": [
+        "**/*.ts"
+      ],
+      "rules": {
+        "indent": "off",
+        "@typescript-eslint/indent": ["warn", 4],
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/explicit-function-return-type": ["error", {
+            "allowExpressions": true,
+            "allowHigherOrderFunctions": true,
+            "allowTypedFunctionExpressions": true
+        }],
+        "@typescript-eslint/interface-name-prefix": "off",
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    },
+    {
+      "extends": "@jtechsvcs/standard",
+      "files": [ "**/*.js" ],
+      "rules": {
+        "@typescript-eslint/indent": "off",
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
+    }
+  ]
+}
