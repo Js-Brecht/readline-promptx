@@ -1,9 +1,5 @@
 import { Key } from 'readline';
 
-/**
- * @typedef {IFilterKeys | IIgnoreKeys} FilterKeys
- */
-
 export type IPrintTypes = string | number | [string, string] | [number, number] | RegExp;
 export type IValidInputs = IPrintTypes | IPrintTypes[];
 export type IKeyTypes = string | Key | RegExp;
