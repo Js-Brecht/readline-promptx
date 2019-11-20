@@ -102,6 +102,16 @@ export class Renderer {
      */
     public constructor(rlInterface?: RLInterface) {
         this.out = process.stdout;
+
+        if (!this.out.isTTY) {
+            throw new Error(
+                '[readline-promptx::Renderer]: ' +
+                'The current process does not output to the terminal.\n' +
+                'This interface is for rendering terminal output, and will write various control characters to the output stream.\n' +
+                'This would likely be undesired behavior.'
+            );
+        }
+
         if (rlInterface) {
             this.registerInterface(rlInterface);
         }
