@@ -2,6 +2,15 @@ import { Key } from 'readline';
 import { IFilterKeys, IKeysList, IPrintList, IValidInputs, IKeyMatch } from '../model';
 import { isPrintable } from './ansi';
 
+/** @hidden
+ * Process a collection of [[IFilterKeys]], and turn it into a [[IKeysList]], so that it
+ * can be used internally
+ * @param {IFilterKeys} keys The list of [[IFilterKeys]] to process; generally received from
+ * the consumer of this package.
+ * @param {IKeysList} oldValue The original [[IKeysList]].  If defined, the processed
+ * collection will be appended.
+ * @returns {IKeysList} The processed collection
+ */
 export const getKeysList = (
     keys: IFilterKeys,
     oldValue?: IKeysList,
@@ -20,6 +29,15 @@ export const getKeysList = (
     return curKeys;
 };
 
+/** @hidden
+ * Process a collection of [[IValidInputs]] and returns it as a [[IPrintList]] so that it
+ * can be used internally
+ * @param {IValidInputs} inputs The collection of [[IValidInputs]] to process.  Generally received
+ * from the consumer of this package.
+ * @param {IPrintList} oldValue The original [[IPrintList]].  If defined, the new processed collection
+ * will be appended.
+ * @returns {IPrintList} The processed collection
+ */
 export const getPrintCharList = (
     inputs: IValidInputs,
     oldValue?: IPrintList,
@@ -44,6 +62,12 @@ export const getPrintCharList = (
     return curInputs;
 };
 
+/** @hidden
+ * Takes an input type `Key` (from `readline`) and tries to match it against a stored [[IKeyMatch]]
+ * @param {IKeyMatch} from The internally stored value from an [[IKeysList]]
+ * @param {Key} to The `Key` from `readline` to match against
+ * @returns {boolean} Does `from` match `to`?
+ */
 export const keyMatches = (from: IKeyMatch, to: Key): boolean => {
     const altKeys = ['ctrl', 'meta', 'shift'];
     if (from instanceof RegExp) {

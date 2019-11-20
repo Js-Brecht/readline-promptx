@@ -1,7 +1,5 @@
 export {
-    IPrintTypes,
     IValidInputs,
-    IKeyTypes,
     IKeysList,
     IFilterKeys,
     IEvents,
@@ -9,6 +7,7 @@ export {
     IPrintMatch,
     IKeyMatch,
     IIgnoreKeys,
+    IInputLen,
 } from './IRLInterface';
 export { ExtendedEventEmitter } from './IExtendEvents';
 export {
@@ -16,5 +15,4 @@ export {
     IRenderState,
     IState,
     IInputPos,
-    IStdio,
 } from './IRenderer';

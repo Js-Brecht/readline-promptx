@@ -1,6 +1,11 @@
 import { IPlainState, IRenderState } from '../model';
 import { lastRowCol, lineCount } from './lines';
 
+/** @hidden
+ * Determines if the `chr` parameter is a printable character
+ * @param {string | number} chr The string, or ascii decimal value, representation of a character
+ * @returns {boolean} Is the character printable?
+ */
 export function isPrintable(chr?: string | number): boolean {
     const code = chr === undefined ?
         0 :
@@ -10,8 +15,19 @@ export function isPrintable(chr?: string | number): boolean {
     return code >= 32 && code <= 126;
 }
 
+/** @hidden */
+// eslint-disable-next-line no-control-regex
 export const ansiPattern = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqrsuy=><]/;
 
+/** @hidden
+ * This will split the defined `procText` into pieces; specifically, the plain text representation, the rendered
+ * text representation, and the cursor positioning (if found).
+ * @param {string} procText The text to process
+ * @param {string} preWrapInput Wrap the input line, if it exceeds `maxWidth`?
+ * @param {number} maxWidth The maximum width to count lines/wrap text based on
+ * @returns {[IPlainState, IRenderState, number]} The input data split into plain text, rendered text,
+ * and the determined input cursor position.  Cursor position will be -1 if not found on this line.
+ */
 export const splitVTString = (
     procText: string,
     preWrapInput = false,

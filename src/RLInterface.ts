@@ -16,56 +16,24 @@ import {
     IIgnoreKeys,
     IKeysList,
     IPrintList,
+    IInputLen,
 } from './model';
 
 interface IRLInterfaceOpts {
-    /** Printable characters that will be considered valid, and allowed to be
-     * processed by `readline`.
-     * * If this is an empty array, then no inputs will be considered valid.
-     * * A numeric tuple ([number, number]) indicates a range of ascii decimal
-     *   values that will be considered valid.
-     * * A string tuple ([string, string]) will be converted to ascii decimal
-     *   values, and processed as a range mentioned above
-     * * A `RegExp` will be matched against the `key.sequence` of a
-     *   `keypress` event.
-     * * A single number will be matched against the `key.sequence`'s ascii
-     *   decimal value.  A single string character will be converted to its decimal
-     *   value, and compared the same
+    /**
+     * See {@link IValidInputs} for details
      */
     validInputs?: IValidInputs;
     /**
-     * An array of keys that will be filtered out, so that they don't reach `readline`,
-     * or any classes listening for the emitted `keypress` events.
-     * * `RegExp` values will be matched against `key.sequence`.
-     * * string values will be matched against `key.name`
-     *   (e.g. 'delete', 'backspace', 'left', 'right', etc...)
-     * * `Key` types are the same as what are emitted by `keypress` events.
-     *   * If `key.sequence` is defined and it matches, then no other properties are
-     *     checked.
-     *   * If `key.name` is defined, and it matches, then `ctrl`, `alt`, and `meta` will
-     *     also be checked to ensure they all evaluate to the same boolean value
+     * See {@link IFilterKeys} for details
      */
     filterKeys?: IFilterKeys;
     /**
-     * An  array of keys that should be ignored by `readline`, but passed through
-     * to listeners.
-     * * `RegExp` values will be matched against `key.sequence`.
-     * * string values will be matched against `key.name`
-     *   (e.g. 'delete', 'backspace', 'left', 'right', etc...)
-     * * `Key` types are the same as what are emitted by `keypress` events.
-     *   * If `key.sequence` is defined and it matches, then no other properties are
-     *     checked.
-     *   * If `key.name` is defined, and it matches, then `ctrl`, `alt`, and `meta` will
-     *     also be checked to ensure they all evaluate to the same boolean value
+     * See {@link IIgnoreKeys} for details
      */
     ignoreKeys?: IIgnoreKeys;
-    /** Constraints to put on input */
-    inputLen?: {
-        /** Once this many characters are reached, input will auto-submit */
-        min?: number;
-        /** `max`: Maximum characters that can be input */
-        max?: number;
-    };
+    /** See {@link IInputLen} for details */
+    inputLen?: IInputLen;
 }
 
 export class RLInterface extends ExtendedEventEmitter<IEvents> {

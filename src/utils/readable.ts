@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-
+/** @hidden */
 export class BypassStream extends EventEmitter implements NodeJS.ReadableStream {
     private _paused = false;
 

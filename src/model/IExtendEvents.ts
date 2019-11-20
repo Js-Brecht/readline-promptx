@@ -1,15 +1,19 @@
 import { EventEmitter } from 'events';
+/** @hidden */
 declare const assignmentCompatibilityHack: unique symbol;
+/** @hidden */
 type ListenerType<T> = [T] extends [(...args: infer U) => any]
     ? U
     : [T] extends [void] ? [] : [T];
 
+/** @hidden */
 export type InnerEEMethodReturnType<T, TValue, FValue> = T extends (
     ...args: any[]
 ) => any
     ? ReturnType<T> extends void | undefined ? FValue : TValue
     : FValue;
 
+/** @hidden */
 export type EEMethodReturnType<
     T,
     S extends string,
@@ -17,6 +21,7 @@ export type EEMethodReturnType<
     FValue = void
 > = S extends keyof T ? InnerEEMethodReturnType<T[S], TValue, FValue> : FValue;
 
+/** @hidden */
 export interface ExtendedEventEmitter<TEventRecord> {
     on<P extends keyof TEventRecord, T>(
         this: T,
@@ -86,4 +91,5 @@ export interface ExtendedEventEmitter<TEventRecord> {
     emit(event: typeof assignmentCompatibilityHack, ...args: any[]): void;
 }
 
+/** @hidden */
 export class ExtendedEventEmitter<TEventRecord> extends EventEmitter { }
