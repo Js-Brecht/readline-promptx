@@ -19,8 +19,10 @@ export type IKeysList = IKeyMatch[];
 export type IPrintMatch = [number, number] | number | RegExp;
 export type IPrintList = IPrintMatch[];
 
-// This are not exposed in types.  Readline is stable; submit PR for @types/readline change
+// These are not exposed in @types/node.  Readline is stable;
+// PR submitted for @types/node/readline update
 // See issue https://github.com/nodejs/node/issues/30347
+// and PR https://github.com/DefinitelyTyped/DefinitelyTyped/pull/40513
 declare module 'readline' {
     interface Interface {
         line: string;
