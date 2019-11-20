@@ -37,14 +37,16 @@ import { RLInterface } from './RLInterface';
  * * `restoreCursor()`: Restore the cursor to the input position
  */
 export class Renderer {
+    /** @private */
     private rlInterface?: RLInterface;
+    /** @private */
     private out: NodeJS.WriteStream = process.stdout;
-    /** Tracks whether this has rendered for the first time */
+    /** @private Tracks whether this has rendered for the first time */
     private firstRender = true;
-    /** Tracks how many rows the cursor will need to be moved from its current position
+    /** @private Tracks how many rows the cursor will need to be moved from its current position
 	 *  when a line is about to be rendered */
     private moveOffset?: number;
-    /**
+    /** @private
 	 * The actual offset of the cursor, in relation to 0-index, at any given time
 	 * This gets set in a couple of ways:
 	 * * It's set to the inputPos.offsetY when `print()` is called
@@ -56,9 +58,9 @@ export class Renderer {
     private cursorOffset = 0;
     private _cursor = 0;
     private cursorVisible = true;
-    /** Tracks where the input line lands in comparison to the 0-index of the output */
+    /** @private Tracks where the input line lands in comparison to the 0-index of the output */
     private inputPos: IInputPos = {
-        /**
+        /** @private
 		 * * If cursor is handled automatically, this marks where the cursor was
 		 * initially placed on the input row (using `cursor.save`), marking the end
 		 * of the prompt and beginning of the input.
@@ -67,24 +69,26 @@ export class Renderer {
 		 * * If not, this marks the position of the `cursor.save` character.
 		 */
         X: 0,
-        /** This marks the which row of the render state the input line lands on */
+        /** @private This marks the which row of the render state the input line lands on */
         Y: 0,
-        /**
+        /** @private
 		 * This indicates what column on the screen the cursor needs to land on to be in the
 		 * correct position for input.
 		 */
         offsetX: 0,
-        /**
+        /** @private
 		 * This indicates what row, offset from the first output row, the cursor needs to land on
 		 * to be in the correct position for input
 		 */
         offsetY: 0,
     };
-    /** Keeps track of what the last render looked like */
+    /** @private Keeps track of what the last render looked like */
     private prevState: IState = getEmptyState();
-    /** Tracks the current rendering process */
+    /** @private Tracks the current rendering process */
     private curState: IState = getEmptyState();
-    /** Gets set when the output from the current row, down, needs to be drawn.
+    /** @private
+     * Gets set when the output from the current row, down, needs to be drawn.
+     *
 	 * This can happen in a few instances:
 	 * * When it's the first render
 	 * * When the currently rendering row exceeds the number of previously rendered rows
@@ -126,6 +130,14 @@ export class Renderer {
         if (!rlInterface.hasRenderer(this))
             this.rlInterface.registerRenderer(this);
     }
+    /**
+     * Checks to see if an RLInterface is already registered with this Renderer instance.
+     *
+     * * Define the `rlInterface` parameter to match the current `RLInterface` instance against
+     *   another one, to see if they are the same.
+     * @param {RLInterface} rlInterface An `RLInterface` instance to match against
+     * @returns {boolean} Is an/the `RLInterface` instance already registered?
+     */
     public hasInterface(rlInterface?: RLInterface): boolean {
         if (rlInterface) return rlInterface === this.rlInterface;
         return !!this.rlInterface;
@@ -182,7 +194,7 @@ export class Renderer {
         return this.out.columns;
     }
 
-    /**
+    /** @private
      * Calculates where the cursor needs to land, considering a couple of factors
      * * The current row offset, which is determined by:
      *     * How many rows have been drawn,
@@ -210,7 +222,7 @@ export class Renderer {
         this.cursorOffset = this.inputPos.offsetY;
     }
 
-    /**
+    /** @private
 	 * Determines how many ACTUAL rows from the origin row (0 index) the desired
 	 * index of the `curState` is, including line wrapping
 	 * @param {number} idx The index of the current state to calculate offset for
@@ -231,7 +243,7 @@ export class Renderer {
         return offset;
     }
 
-    /**
+    /** @private
 	 * This will drop the cursor down to the last row, last column, of the
 	 * output, and then issue a CLEAR-END-OF-SCREEN ANSI code.
 	 */
@@ -310,7 +322,7 @@ export class Renderer {
         this.moveOffset = undefined;
     }
 
-    /**
+    /** @private
 	 * Spool Print Formatted - Spool output into state, and selectively draw formatted
 	 * output to screen.
 	 * @param {IPlainState} plain The plain text representation of the rendered output
