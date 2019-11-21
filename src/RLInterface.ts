@@ -21,18 +21,52 @@ import {
 
 interface IRLInterfaceOpts {
     /**
-     * See {@link IValidInputs} for details
+     * Printable characters that will be considered valid, and allowed to be
+     * processed by `readline`.
+     *
+     * ---
+     *
+     * * Can be a single value, but any tuples should be enclosed in an array
+     *   * e.g. [[32, 126]] = allow all printable characters
+     * * If this is an empty array, then no inputs will be considered valid.
+     * * A numeric tuple ([number, number]) indicates a range of ascii character
+     *   decimal values that will be considered valid.
+     * * A string tuple's ([string, string]) members will be converted to their ascii
+     *   decimal equivalents, and processed as a range mentioned above
+     * * A `RegExp` will be matched against the `key.sequence` of a
+     *   `keypress` event's parameter.
+     * * A single number will be matched against the `key.sequence`'s ascii
+     *   decimal value.  A single string character will be converted to its decimal
+     *   value, and compared the same
      */
     validInputs?: IValidInputs;
     /**
-     * See {@link IFilterKeys} for details
+     * A collection of keys that will be filtered out, so that they don't reach `readline`
+     * or any classes listening for the emitted `keypress` events.
+     * * `RegExp` values will be matched against `key.sequence`.
+     * * string values will be matched against `key.name`
+     *   (e.g. 'delete', 'backspace', 'left', 'right', etc...)
+     * * `Key` types are the same as those emitted by `keypress` events.
+     *   * If `key.sequence` is defined and it matches, then no other properties are
+     *     checked.
+     *   * If `key.name` is defined, and it matches, then `ctrl`, `alt`, and `meta` will
+     *     also be checked to ensure they all evaluate to the same boolean value
      */
     filterKeys?: IFilterKeys;
     /**
-     * See {@link IIgnoreKeys} for details
+     * A collection of keys that should be ignored by `readline`, but passed through
+     * to listeners.
+     * * `RegExp` values will be matched against `key.sequence`.
+     * * string values will be matched against `key.name`
+     *   (e.g. 'delete', 'backspace', 'left', 'right', etc...)
+     * * `Key` types are the same as those emitted by `keypress` events.
+     *   * If `key.sequence` is defined and it matches, then no other properties are
+     *     checked.
+     *   * If `key.name` is defined, and it matches, then `ctrl`, `alt`, and `meta` will
+     *     also be checked to ensure they all evaluate to the same boolean value
      */
     ignoreKeys?: IIgnoreKeys;
-    /** See {@link IInputLen} for details */
+    /** Constraints to put on input */
     inputLen?: IInputLen;
 }
 
