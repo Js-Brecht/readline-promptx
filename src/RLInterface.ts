@@ -82,7 +82,7 @@ export class RLInterface extends ExtendedEventEmitter<IEvents> {
     private validInput?: IPrintList;
     private filterKeys?: IKeysList;
     private ignoreKeys?: IKeysList;
-    public constructor(stdin?: NodeJS.ReadStream, opts?: IRLInterfaceOpts) {
+    public constructor(opts?: IRLInterfaceOpts, stdin?: NodeJS.ReadStream) {
         super();
         if (stdin) this.stdin = stdin;
 
