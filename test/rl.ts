@@ -1,6 +1,7 @@
 import readline, { Key } from 'readline';
 import { Writable } from 'stream';
 import { cursor, erase } from 'sisteransi';
+import printf from 'printf';
 // const pattern = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/;
 
 const esc = '\x1B';
@@ -8,7 +9,7 @@ const csi = `${esc}[`;
 const term = {
     clear: () => { process.stdout.write(erase.screen); },
     setScroll: (start = 0, end = process.stdout.rows) => {
-        process.stdout.write(`${csi}${start}${end < process.stdout.rows ? `;${end}` : ''}r`);
+        process.stdout.write(printf(`${csi}%d%sr`, start, end < process.stdout.rows ? printf(';%d', end) : ''));
     },
     reset: () => {
         process.stdout.write(`${csi}!p`);
@@ -18,7 +19,9 @@ const debugOutput = (key: string | Key): void => {
     process.stdout.write(
         cursor.save +
         cursor.to(0, process.stdout.rows - 2) +
-        JSON.stringify(key) +
+        JSON.stringify(key) + '\n' +
+        //eslint-disable-next-line @typescript-eslint/no-use-before-define
+        (rl as any).line +
         erase.lineEnd + '\n' +
         cursor.restore,
     );
@@ -49,6 +52,7 @@ class CustomWrite extends Writable {
         const data = chunk.toString().split(/\r?\n/);
         if (data.length === 1) {
             this.line += data[0];
+            debugOutput(this.line);
         } else {
             for (const [i, l] of data.entries()) {
                 if (i === 0) {
