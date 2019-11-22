@@ -24,7 +24,7 @@ export type IIgnoreKeys = IKeyTypes | IKeyTypes[];
 export type IInputLen = {
     /** If defined: Once this many characters are reached, input will auto-submit */
     min?: number;
-    /** If defined: Maximum characters that can be input */
+    /** If defined: Total characters that can be input before it will stop accepting more */
     max?: number;
 
 }
