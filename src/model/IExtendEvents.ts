@@ -1,8 +1,18 @@
 import { EventEmitter } from 'events';
+
+/** @hidden */
+export interface IEventList {
+    [k: string]: Function[];
+}
+/** @hidden */
+export interface IEventRegister {
+    [nm: string]: Function;
+}
+
 /** @hidden */
 declare const assignmentCompatibilityHack: unique symbol;
 /** @hidden */
-type ListenerType<T> = [T] extends [(...args: infer U) => any]
+export type ListenerType<T> = [T] extends [(...args: infer U) => any]
     ? U
     : [T] extends [void] ? [] : [T];
 

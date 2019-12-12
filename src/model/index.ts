@@ -9,7 +9,11 @@ export {
     IIgnoreKeys,
     IInputLen,
 } from './IRLInterface';
-export { ExtendedEventEmitter } from './IExtendEvents';
+export {
+    ExtendedEventEmitter,
+    IEventList,
+    IEventRegister,
+} from './IExtendEvents';
 export {
     IPlainState,
     IRenderState,

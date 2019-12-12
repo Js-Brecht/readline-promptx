@@ -30,11 +30,11 @@ export type IInputLen = {
 }
 
 export interface IEvents {
-    submit: (value: string) => void;
-    change: (value: string) => void;
-    keypress: (chr: string, key: Key) => void;
-    cursor: (curPos: number) => void;
-    close: () => void;
+    close: () => void | boolean;
+    submit: (value: string) => void | boolean;
+    change: (value: string) => void | string | false;
+    keypress: (chr: string, key: Key) => void | false;
+    cursor: (curPos: number) => void | false;
 }
 
 /** @hidden */
